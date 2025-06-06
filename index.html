@@ -1,1 +1,46 @@
-ghvb
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login Form</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding-top: 50px; }
+    input, button { padding: 10px; margin: 5px; width: 200px; }
+  </style>
+</head>
+<body>
+  <h2>Form Login</h2>
+  <input type="text" id="username" placeholder="Username"><br>
+  <input type="password" id="password" placeholder="Password"><br>
+  <button onclick="submitLogin()">Login</button>
+
+  <p id="status"></p>
+
+  <script>
+    function submitLogin() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      fetch("https://script.google.com/macros/s/AKfycbyWmB2IOSWu6yS98kuXdW-Lgl09uKsVWKP0FZWVJNGguWo6m0qOXqozDv8qftUMqpbV/exec", {
+        method: "POST",
+        body: JSON.stringify({ username, password }),
+        headers: {
+          "Content-Type": "application/json",
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.result === "success") {
+          document.getElementById("status").innerText = "Login berhasil disimpan!";
+        } else {
+          document.getElementById("status").innerText = "Gagal menyimpan login.";
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        document.getElementById("status").innerText = "Terjadi error.";
+      });
+    }
+  </script>
+</body>
+</html>
